@@ -1,0 +1,87 @@
+import bpy
+import csv
+from mathutils import Color
+
+
+def generate_heatmap_color(value_f):
+    min_value = 900
+    max_value = 18000
+    # Определяем диапазон цветов от синего до красного
+    blue = (0, 0, 1)
+    red = (1, 0, 0)
+
+    # Масштабируем значение в диапазоне от 0 до 1
+    normalized_value = (value_f - min_value) / (max_value - min_value)
+
+    # Интерполируем между синим и красным, основываясь на нормализованном значении
+    r = blue[0] + (red[0] - blue[0]) * normalized_value
+    g = blue[1] + (red[1] - blue[1]) * normalized_value
+    b = blue[2] + (red[2] - blue[2]) * normalized_value
+
+    return r, g, b  
+
+
+# Укажите путь к файлу, который вы хотите открыть
+file_path = "E:\\blender\\2023\\CWD\\single_matrix.txt"
+
+# Создаем пустой список для хранения данных из таблицы
+table_data = []
+
+# Открываем файл и читаем данные
+with open(file_path, "r") as file:
+    # Используем csv.reader для чтения данных из файла
+    reader = csv.reader(file, delimiter="\t")
+
+    # Пропускаем заголовок, если он есть
+    # next(reader)
+
+    # Читаем данные из каждой строки таблицы
+    for row in reader:
+        # Предполагаем, что данные в таблице состоят из трех столбцов
+        # Извлекаем значения из каждого столбца и добавляем их в список
+        column1 = row[0]
+        column2 = row[1]
+        column3 = row[2]
+        table_data.append((column1, column2, column3))
+
+# Выводим прочитанные данные
+# for row in table_data:
+#     print(row[2])  
+
+for i_t in range(0, 132): #133
+    # Форматируем номер объекта, чтобы иметь ведущие нули
+    number = str(i_t+1).zfill(3)
+    
+    # Формируем имя объекта
+    object_name = "1DC_main_inside_" + number
+    
+    # Находим объект по его имени
+    obj = bpy.data.objects.get(object_name)
+    
+    if obj is not None:
+        
+        # Создаем новый материал
+        material_name = "mat_" + object_name
+        material = bpy.data.materials.new(name=material_name)
+        
+        # Присваиваем новый материал объекту
+        obj.data.materials.clear()  # Удаляем все существующие материалы объекта
+        obj.data.materials.append(material)
+        
+        # Устанавливаем значение альфа-канала нового материала
+        material.use_nodes = True
+        material.node_tree.nodes["Principled BSDF"].inputs["Alpha"].default_value = 0.65
+        
+        
+        color = generate_heatmap_color(float(table_data[i_t][2]))
+        
+        # Устанавливаем цвет нового материала
+        material.diffuse_color = (color[0], color[1], color[2], 1.0)  # Красный цвет (R, G, B, Alpha)
+        material.node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = (color[0], color[1], color[2], 1.0)  # Красный цвет (R, G, B, Alpha)
+
+        pass
+
+
+
+
+

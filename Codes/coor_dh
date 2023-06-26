@@ -1,0 +1,130 @@
+import bpy
+import csv
+
+
+# координаты камер
+
+for i_t in range(0, 132): #133
+    # Форматируем номер объекта, чтобы иметь ведущие нули
+    number = str(i_t+1).zfill(3)
+    
+    # Формируем имя объекта
+    object_name = "1DC_main_inside_" + number
+    
+    # Находим объект по его имени
+    obj = bpy.data.objects.get(object_name)
+    
+    if obj is not None:
+        
+        xCoordinate_hor = [9603, 5943, 2283, -1377, -5037, -8697]
+        zCoordinate_hor = 7794
+        y0Coordinate_hor = 11107
+        
+        if i_t >= 0 and i_t<22:
+            
+            # Новые координаты объекта
+            new_x = (zCoordinate_hor)/1000
+            new_y = (xCoordinate_hor[5])/1000
+            new_z = (y0Coordinate_hor - 515*i_t)/1000
+
+            # Устанавливаем новые координаты объекта
+            obj.location = (new_x, new_y, new_z)
+                
+        if i_t >= 22 and i_t<44:
+            
+            # Новые координаты объекта
+            new_x = (zCoordinate_hor)/1000
+            new_y = (xCoordinate_hor[4])/1000
+            new_z = (y0Coordinate_hor - 515*(i_t-22))/1000
+
+            # Устанавливаем новые координаты объекта
+            obj.location = (new_x, new_y, new_z)   
+            
+        if i_t >= 44 and i_t<66:
+            
+            # Новые координаты объекта
+            new_x = (zCoordinate_hor)/1000
+            new_y = (xCoordinate_hor[3])/1000
+            new_z = (y0Coordinate_hor - 515*(i_t-44))/1000
+
+            # Устанавливаем новые координаты объекта
+            obj.location = (new_x, new_y, new_z)  
+            
+        if i_t >= 66 and i_t<88:
+            
+            # Новые координаты объекта
+            new_x = (zCoordinate_hor)/1000
+            new_y = (xCoordinate_hor[2])/1000
+            new_z = (y0Coordinate_hor - 515*(i_t-66))/1000
+
+            # Устанавливаем новые координаты объекта
+            obj.location = (new_x, new_y, new_z)  
+            
+        if i_t >= 88 and i_t<110:
+            
+            # Новые координаты объекта
+            new_x = (zCoordinate_hor)/1000
+            new_y = (xCoordinate_hor[1])/1000
+            new_z = (y0Coordinate_hor - 515*(i_t-88))/1000
+
+            # Устанавливаем новые координаты объекта
+            obj.location = (new_x, new_y, new_z)  
+            
+        if i_t >= 110 and i_t<132:
+            
+            # Новые координаты объекта
+            new_x = (zCoordinate_hor)/1000
+            new_y = (xCoordinate_hor[0])/1000
+            new_z = (y0Coordinate_hor - 515*(i_t-110))/1000
+
+            # Устанавливаем новые координаты объекта
+            obj.location = (new_x, new_y, new_z)  
+            
+            
+for i_t in range(0, 132): #133
+    # Форматируем номер объекта, чтобы иметь ведущие нули
+    number = str(i_t+1).zfill(3)
+    
+    # Формируем имя объекта
+    object_name = "1DC_main." + number
+    
+    # Находим объект по его имени
+    obj = bpy.data.objects.get(object_name)
+    
+    if obj is not None:
+        
+        xCoordinate_vert = -11095.05
+        yCoordinate_vert = 2233.8585
+        zCoordinate_vert = 10390.695 - 1236 + 8 - 3
+        
+        if i_t >= 0 and i_t<22*2:
+            
+            # Новые координаты объекта
+            new_x = (zCoordinate_vert)/1000
+            new_y = (xCoordinate_vert + 515*i_t)/1000
+            new_z = (yCoordinate_vert + 3661*2)/1000
+
+            # Устанавливаем новые координаты объекта
+            obj.location = (new_x, new_y, new_z)
+            
+          
+        if i_t >= 22*2 and i_t<22*2+22*2:
+            
+            # Новые координаты объекта
+            new_x = (zCoordinate_vert)/1000
+            new_y = (xCoordinate_vert + 515*(i_t-22*2))/1000
+            new_z = (yCoordinate_vert + 3661*1)/1000
+
+            # Устанавливаем новые координаты объекта
+            obj.location = (new_x, new_y, new_z)   
+            
+        if i_t >= 44*2 and i_t<44*2+22*2:
+            
+            # Новые координаты объекта
+            new_x = (zCoordinate_vert)/1000
+            new_y = (xCoordinate_vert + 515*(i_t-44*2))/1000
+            new_z = (yCoordinate_vert + 3661*0)/1000
+
+            # Устанавливаем новые координаты объекта
+            obj.location = (new_x, new_y, new_z)  
+            
